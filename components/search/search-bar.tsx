@@ -3,7 +3,13 @@
 import { useState } from 'react';
 import { Search, X } from 'lucide-react';
 
-export function SearchBar({ value, onChange, placeholder = "Search..." }) {
+interface SearchBarProps {
+  value: string;
+  onChange: (value: string) => void;
+  placeholder?: string;
+}
+
+export function SearchBar({ value, onChange, placeholder = "Search..." }: SearchBarProps) {
   const [isFocused, setIsFocused] = useState(false);
 
   return (

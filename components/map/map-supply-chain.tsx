@@ -14,16 +14,33 @@ import {
 } from 'lucide-react';
 
 // Mock map component since we can't use actual Mapbox in this environment
-export function MapSupplyChain({ journeyData, onPointSelect }) {
-  const [selectedPoint, setSelectedPoint] = useState(null);
+export type JourneyPoint = {
+  id: string | number;
+  event: string;
+  status: 'completed' | 'current' | 'pending' | string;
+  location: string;
+  date: string;
+  time: string;
+  description?: string;
+  temperature?: string | number;
+  humidity?: string | number;
+};
+
+type MapSupplyChainProps = {
+  journeyData: JourneyPoint[];
+  onPointSelect?: (point: JourneyPoint) => void;
+};
+
+export function MapSupplyChain({ journeyData, onPointSelect }: MapSupplyChainProps) {
+  const [selectedPoint, setSelectedPoint] = useState<JourneyPoint | null>(null);
   const mapRef = useRef(null);
 
-  const handlePointClick = (point) => {
+  const handlePointClick = (point: JourneyPoint) => {
     setSelectedPoint(point);
     onPointSelect?.(point);
   };
 
-  const getStatusColor = (status) => {
+  const getStatusColor = (status: string) => {
     switch (status) {
       case 'completed':
         return 'bg-green-500';
@@ -36,7 +53,7 @@ export function MapSupplyChain({ journeyData, onPointSelect }) {
     }
   };
 
-  const getStatusIcon = (event) => {
+  const getStatusIcon = (event: string) => {
     switch (event.toLowerCase()) {
       case 'harvested':
         return '🌱';

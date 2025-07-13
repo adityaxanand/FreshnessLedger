@@ -13,8 +13,26 @@ import {
   Navigation
 } from 'lucide-react';
 
-export function JourneyTimeline({ journeyData, selectedPoint, onPointSelect }) {
-  const getStatusColor = (status) => {
+export interface JourneyPoint {
+  id: string | number;
+  event: string;
+  status: 'completed' | 'current' | 'pending' | string;
+  location: string;
+  date: string;
+  time: string;
+  description?: string;
+  temperature?: string | number;
+  humidity?: string | number;
+}
+
+interface JourneyTimelineProps {
+  journeyData: JourneyPoint[];
+  selectedPoint?: JourneyPoint;
+  onPointSelect?: (point: JourneyPoint) => void;
+}
+
+export function JourneyTimeline({ journeyData, selectedPoint, onPointSelect }: JourneyTimelineProps) {
+  const getStatusColor = (status: JourneyPoint['status']) => {
     switch (status) {
       case 'completed':
         return 'text-green-600 bg-green-100';
@@ -27,7 +45,7 @@ export function JourneyTimeline({ journeyData, selectedPoint, onPointSelect }) {
     }
   };
 
-  const getStatusIcon = (status) => {
+  const getStatusIcon = (status: JourneyPoint['status']) => {
     switch (status) {
       case 'completed':
         return CheckCircle;
@@ -40,7 +58,7 @@ export function JourneyTimeline({ journeyData, selectedPoint, onPointSelect }) {
     }
   };
 
-  const getEventIcon = (event) => {
+  const getEventIcon = (event: string) => {
     switch (event.toLowerCase()) {
       case 'harvested':
         return '🌱';

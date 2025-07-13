@@ -80,9 +80,11 @@ const mockJourneyData = [
   }
 ];
 
+import type { JourneyPoint } from '@/components/map/map-supply-chain';
+
 export default function MapPage() {
   const [viewMode, setViewMode] = useState('map');
-  const [selectedJourneyPoint, setSelectedJourneyPoint] = useState(null);
+  const [selectedJourneyPoint, setSelectedJourneyPoint] = useState<JourneyPoint | null>(null);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-blue-50">
@@ -102,7 +104,7 @@ export default function MapPage() {
                   Supply Chain Map
                 </h1>
                 <p className="text-xl text-gray-600">
-                  Track your food's journey from farm to table
+                  Track your food&apos;s journey from farm to table
                 </p>
               </div>
               
@@ -179,7 +181,7 @@ export default function MapPage() {
             ) : (
               <JourneyTimeline 
                 journeyData={mockJourneyData}
-                selectedPoint={selectedJourneyPoint}
+                selectedPoint={selectedJourneyPoint ?? undefined}
                 onPointSelect={setSelectedJourneyPoint}
               />
             )}

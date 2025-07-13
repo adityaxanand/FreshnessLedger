@@ -45,8 +45,27 @@ const priceRanges = [
   { label: 'Over $20', value: '20+' }
 ];
 
-export function SearchFilters({ filters, onFiltersChange }) {
-  const updateFilter = (key, value) => {
+interface SearchFiltersProps {
+  filters: {
+    location: string;
+    certification: string;
+    dateRange: string;
+    priceRange: string;
+    inStockOnly: boolean;
+    [key: string]: string | boolean;
+  };
+  onFiltersChange: (filters: {
+    location: string;
+    certification: string;
+    dateRange: string;
+    priceRange: string;
+    inStockOnly: boolean;
+    [key: string]: string | boolean;
+  }) => void;
+}
+
+export function SearchFilters({ filters, onFiltersChange }: SearchFiltersProps) {
+  const updateFilter = (key: string, value: string | boolean) => {
     onFiltersChange({
       ...filters,
       [key]: value
